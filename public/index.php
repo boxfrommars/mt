@@ -71,12 +71,12 @@
     <script src="/vendor/backbone.js"></script>
     <script src="/vendor/backbone.marionette.js"></script>
     <script src="/vendor/bootstrap3/js/bootstrap.js"></script>
-    <script type="text/javascript">
-        var App = new Marionette.Application();
 
-        App.addRegions({
-            mainRegion: "#main-region"
-        });
+
+    <script src="/js/app.js"></script>
+    <script src="/js/entities/contact.js"></script>
+
+    <script type="text/javascript">
 
         App.Contact = Backbone.Model.extend({});
 
