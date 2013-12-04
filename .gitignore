@@ -5,6 +5,7 @@
 /tests/coverage
 /tests/reports
 /tmp
+/node_modules
 /vendor/
 /.idea
 

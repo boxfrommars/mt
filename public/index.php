@@ -65,24 +65,19 @@
     <script type="text/template" id="contact-list-item">
         <p><%= firstName %> <%= lastName %></p>
     </script>
-    <script src="/vendor/jquery.js"></script>
-    <script src="/vendor/json2.js"></script>
-    <script src="/vendor/underscore.js"></script>
-    <script src="/vendor/backbone.js"></script>
-    <script src="/vendor/backbone.marionette.js"></script>
-    <script src="/vendor/bootstrap3/js/bootstrap.js"></script>
-
+<!--    <script src="/vendor/jquery.js"></script>-->
+<!--    <script src="/vendor/json2.js"></script>-->
+<!--    <script src="/vendor/underscore.js"></script>-->
+<!--    <script src="/vendor/backbone.js"></script>-->
+<!--    <script src="/vendor/backbone.marionette.js"></script>-->
+<!--    <script src="/vendor/bootstrap3/js/bootstrap.js"></script>-->
+    <script src="build/vendor.min.js"></script>
 
     <script src="/js/app.js"></script>
     <script src="/js/entities/contact.js"></script>
 
     <script type="text/javascript">
 
-        App.Contact = Backbone.Model.extend({});
-
-        App.ContactCollection = Backbone.Collection.extend({
-            model: App.Contact
-        });
 
         App.ContactItemView = Marionette.ItemView.extend({
             tagName: "li",
