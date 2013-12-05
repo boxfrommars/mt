@@ -1,10 +1,20 @@
-// Обязательная обёртка
 module.exports = function(grunt) {
 
-    // Задачи
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        // Склеиваем
+        bower: {
+            install: {
+                options: {
+                    targetDir: './public/vendor',
+                    layout: 'byType',
+                    install: true,
+                    verbose: false,
+                    cleanTargetDir: false,
+                    cleanBowerDir: false,
+                    bowerOptions: {}
+                }
+            }
+        },
         concat: {
             options: {
                 separator: ';',
@@ -14,12 +24,12 @@ module.exports = function(grunt) {
             },
             vendor: {
                 src: [
-                    'public/vendor/jquery.js',
-                    'public/vendor/json2.js',
-                    'public/vendor/underscore.js',
-                    'public/vendor/backbone.js',
-                    'public/vendor/backbone.marionette.js',
-                    'public/vendor/bootstrap3/js/bootstrap.js'
+                    'public/vendor/jquery/jquery.js',
+                    'public/vendor/json2/json2.js',
+                    'public/vendor/underscore/underscore.js',
+                    'public/vendor/backbone/backbone.js',
+                    'public/vendor/marionette/backbone.marionette.js',
+                    'public/vendor/bootstrap/bootstrap.js'
                 ],
                 dest: 'public/build/vendor.js'
             },
@@ -30,7 +40,6 @@ module.exports = function(grunt) {
                 dest: 'public/build/scripts.js'
             }
         },
-        // Сжимаем
         uglify: {
             vendor: {
                 files: {
@@ -48,14 +57,21 @@ module.exports = function(grunt) {
                 jshintrc: '.jshintrc'
             },
             files: 'public/js/**/*.js'
+        },
+        cssmin: {
+            combine: {
+                files: {
+                    'public/build/vendor.css': ['public/vendor/bootstrap/bootstrap.css']
+                }
+            }
         }
     });
 
-    // Загрузка плагинов, установленных с помощью npm install
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-bower-task');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
 
-    // Задача по умолчанию
-    grunt.registerTask('default', ['jshint', 'concat', 'uglify']);
+    grunt.registerTask('default', ['bower', 'jshint', 'concat', 'uglify', 'cssmin']);
 };

@@ -10,7 +10,7 @@
 
     <title>Tux</title>
 
-    <link href="/vendor/bootstrap3/css/bootstrap.css" rel="stylesheet">
+    <link href="/build/vendor.css" rel="stylesheet">
     <style>
         body {
             padding-top: 50px;
@@ -65,16 +65,9 @@
     <script type="text/template" id="contact-list-item">
         <p><%= firstName %> <%= lastName %></p>
     </script>
-<!--    <script src="/vendor/jquery.js"></script>-->
-<!--    <script src="/vendor/json2.js"></script>-->
-<!--    <script src="/vendor/underscore.js"></script>-->
-<!--    <script src="/vendor/backbone.js"></script>-->
-<!--    <script src="/vendor/backbone.marionette.js"></script>-->
-<!--    <script src="/vendor/bootstrap3/js/bootstrap.js"></script>-->
-    <script src="build/vendor.min.js"></script>
 
-    <script src="/js/app.js"></script>
-    <script src="/js/entities/contact.js"></script>
+    <script src="/build/vendor.min.js"></script>
+    <script src="/build/scripts.min.js"></script>
 
     <script type="text/javascript">
 

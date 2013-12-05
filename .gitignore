@@ -6,6 +6,7 @@
 /tests/reports
 /tmp
 /node_modules
+/bower_components
 /vendor/
 /.idea
 

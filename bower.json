@@ -1,0 +1,27 @@
+{
+  "name": "tux",
+  "version": "0.1.0",
+  "homepage": "https://github.com/boxfrommars/mt",
+  "authors": [
+    "Dmitry Groza <boxfrommars@gmail.com>"
+  ],
+  "description": "tux app",
+  "main": "?",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "underscore": "~1.5.2",
+    "json2": "*",
+    "bootstrap": "~3.0.2",
+    "jquery": "~2.0.3",
+    "marionette": "~1.4.0"
+  },
+  "devDependencies": {}
+}
