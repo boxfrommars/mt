@@ -10,6 +10,7 @@
         "_": true,
         "Marionette": true,
         "$": true,
-        "App": true
+        "App": true,
+        "window": true
     }
 }

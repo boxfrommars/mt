@@ -15,6 +15,9 @@
         body {
             padding-top: 50px;
         }
+        .button-cell {
+            width: 75px;
+        }
     </style>
 
     <!--[if lt IE 9]>
@@ -63,47 +66,67 @@
     </div>
 
     <script type="text/template" id="contact-list-item">
-        <p><%= firstName %> <%= lastName %></p>
+        <td><%= firstName %></td>
+        <td><%= lastName %></td>
+        <td class="button-cell">
+            <button class="btn btn-xs btn-default js-delete">
+                <i class="glyphicon glyphicon-remove"></i>
+                Delete
+            </button>
+
+        </td>
+        <td class="button-cell">
+            <a href="#contacts/<%= id %>" class="btn btn-xs btn-default js-show">
+                <i class="glyphicon glyphicon-eye-open"></i>
+                Show
+            </a>
+        </td>
     </script>
 
+    <script type="text/template" id="contact-list">
+        <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </script>
+
+    <script type="text/template" id="contact-view">
+        <h1><%= firstName %> <%= lastName %></h1>
+        <p><strong>Phone number:</strong> <%= phoneNumber %></p>
+    </script>
+
+    <script type="text/template" id="missing-contact-view">
+        <div class="alert alert-danger">This contact doesn't exist!</div>
+    </script>
+
+    <script type="text/template" id="loading-view">
+        <div id="spinner"></div>
+    </script>
+
+<!--    DEV part-->
     <script src="/build/vendor.min.js"></script>
-    <script src="/build/scripts.min.js"></script>
+    <script src="/js/app.js"></script>
+    <script src="/js/config/localstorage.js"></script>
+    <script src="/js/common/views.js"></script>
+    <script src="/js/entities/contact.js"></script>
+    <script src="/js/contacts/contacts_app.js"></script>
+    <script src="/js/contacts/list/list_view.js"></script>
+    <script src="/js/contacts/list/list_controller.js"></script>
+    <script src="/js/contacts/show/show_view.js"></script>
+    <script src="/js/contacts/show/show_controller.js"></script>
+<!--    END DEV part-->
+
+<!--    PRODUCTION part-->
+<!--    <script src="/build/scripts.min.js"></script>-->
+<!--    END PRODUCTION part-->
 
     <script type="text/javascript">
-
-
-        App.ContactItemView = Marionette.ItemView.extend({
-            tagName: "li",
-            template: "#contact-list-item"
-        });
-
-        App.ContactsView = Marionette.CollectionView.extend({
-            tagName: "ul",
-            itemView: App.ContactItemView
-        });
-
-        App.on("initialize:after", function(){
-            var contacts = new App.ContactCollection([{
-                firstName: "Bob",
-                lastName: "Brigham",
-                phoneNumber: "555-0163"
-            }, {
-                firstName: "Alice",
-                lastName: "Arten",
-                phoneNumber: "555-0184"
-            }, {
-                firstName: "Charlie",
-                lastName: "Campbell",
-                phoneNumber: "555-0129"
-            }]);
-
-            var contactsView = new App.ContactsView({
-                collection: contacts
-            });
-
-            App.mainRegion.show(contactsView);
-        });
-
         App.start();
     </script>
 </body>

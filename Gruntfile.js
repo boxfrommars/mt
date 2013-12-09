@@ -1,5 +1,21 @@
 module.exports = function(grunt) {
 
+    var appJsFiles = [
+        'public/js/**/*.js'
+    ];
+
+    var vendorJsFiles = [
+        'public/vendor/jquery/jquery.js',
+        'public/vendor/json2/json2.js',
+        'public/vendor/underscore/underscore.js',
+        'public/vendor/backbone/backbone.js',
+        'public/vendor/backbone.localstorage/backbone.localStorage.js',
+        'public/vendor/marionette/backbone.marionette.js',
+        'public/vendor/bootstrap/bootstrap.js',
+        'public/vendor/spinjs/spin.js',
+        'bower_components/spinjs/jquery.spin.js'
+    ];
+
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         bower: {
@@ -23,20 +39,11 @@ module.exports = function(grunt) {
 
             },
             vendor: {
-                src: [
-                    'public/vendor/jquery/jquery.js',
-                    'public/vendor/json2/json2.js',
-                    'public/vendor/underscore/underscore.js',
-                    'public/vendor/backbone/backbone.js',
-                    'public/vendor/marionette/backbone.marionette.js',
-                    'public/vendor/bootstrap/bootstrap.js'
-                ],
+                src: vendorJsFiles,
                 dest: 'public/build/vendor.js'
             },
             main: {
-                src: [
-                    'public/js/**/*.js'
-                ],
+                src: appJsFiles,
                 dest: 'public/build/scripts.js'
             }
         },
@@ -56,7 +63,7 @@ module.exports = function(grunt) {
             options: {
                 jshintrc: '.jshintrc'
             },
-            files: 'public/js/**/*.js'
+            files: appJsFiles
         },
         cssmin: {
             combine: {
@@ -74,4 +81,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
 
     grunt.registerTask('default', ['bower', 'jshint', 'concat', 'uglify', 'cssmin']);
+    grunt.registerTask('dev', ['jshint']);
 };
