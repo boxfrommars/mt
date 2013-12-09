@@ -98,6 +98,10 @@
 
     <script type="text/template" id="contact-view">
         <h1><%= firstName %> <%= lastName %></h1>
+        <a href="#contacts/<%= id %>/edit" class="btn btn-small js-edit">
+            <i class="glyphicon glyphicon-pencil"></i>
+            Edit this contact
+        </a>
         <p><strong>Phone number:</strong> <%= phoneNumber %></p>
     </script>
 
@@ -107,6 +111,25 @@
 
     <script type="text/template" id="loading-view">
         <div id="spinner"></div>
+    </script>
+
+    <script type="text/template" id="contact-form">
+        <h1>Edit <%= firstName %> <%= lastName %></h1>
+        <form role="form">
+            <div class="form-group">
+                <label for="contact-firstName" class="control-label">First name:</label>
+                <input id="contact-firstName" class="form-control" name="firstName" type="text" value="<%= firstName %>"/>
+            </div>
+            <div class="form-group">
+                <label for="contact-lastName" class="control-label">Last name:</label>
+                <input id="contact-lastName" class="form-control" name="lastName" type="text" value="<%= lastName %>"/>
+            </div>
+            <div class="form-group">
+                <label for="contact-phoneNumber" class="control-label">Phone number:</label>
+                <input id="contact-phoneNumber" class="form-control" name="phoneNumber" type="text" value="<%= phoneNumber %>"/>
+            </div>
+            <button class="btn btn-default js-submit">Save</button>
+        </form>
     </script>
 
 <!--    DEV part-->
@@ -120,6 +143,8 @@
     <script src="/js/contacts/list/list_controller.js"></script>
     <script src="/js/contacts/show/show_view.js"></script>
     <script src="/js/contacts/show/show_controller.js"></script>
+    <script src="/js/contacts/edit/edit_view.js"></script>
+    <script src="/js/contacts/edit/edit_controller.js"></script>
 <!--    END DEV part-->
 
 <!--    PRODUCTION part-->

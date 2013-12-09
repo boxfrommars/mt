@@ -11,6 +11,7 @@ module.exports = function(grunt) {
         'public/vendor/backbone/backbone.js',
         'public/vendor/backbone.localstorage/backbone.localStorage.js',
         'public/vendor/marionette/backbone.marionette.js',
+        'public/vendor/backbone.syphon/lib/backbone.syphon.js',
         'public/vendor/bootstrap/bootstrap.js',
         'public/vendor/spinjs/spin.js',
         'bower_components/spinjs/jquery.spin.js'

@@ -5,7 +5,7 @@ App.addRegions({
     mainRegion: "#main-region"
 });
 
-App.latency = 100;
+App.latency = 1000;
 
 App.navigate = function(route, options){
 //    options || (options = {});
@@ -23,6 +23,31 @@ App.on("initialize:after", function(){
             App.trigger("contacts:list");
         }
     }
+});;App.module("Common.Views", function(Views, ContactManager, Backbone, Marionette, $){
+    Views.Loading = Marionette.ItemView.extend({
+        template: "#loading-view",
+        onShow: function(){
+            var opts = {
+                lines: 13, // The number of lines to draw
+                length: 20, // The length of each line
+                width: 10, // The line thickness
+                radius: 30, // The radius of the inner circle
+                corners: 1, // Corner roundness (0..1)
+                rotate: 0, // The rotation offset
+                direction: 1, // 1: clockwise, -1: counterclockwise
+                color: "#000", // #rgb or #rrggbb
+                speed: 1, // Rounds per second
+                trail: 60, // Afterglow percentage
+                shadow: false, // Whether to render a shadow
+                hwaccel: false, // Whether to use hardware acceleration
+                className: "spinner", // The CSS class to assign to the spinner
+                zIndex: 2e9, // The z-index (defaults to 2000000000)
+                top: "30px", // Top position relative to parent in px
+                left: "auto" // Left position relative to parent in px
+            };
+            $("#spinner").spin(opts);
+        }
+    });
 });;App.module("Entities", function(Entities, App, Backbone, Marionette, $, _){
     var findStorageKey = function(entity){
         // use a model's urlRoot value
@@ -55,7 +80,8 @@ App.on("initialize:after", function(){
     ContactsApp.Router = Marionette.AppRouter.extend({
         appRoutes: {
             "contacts": 'listContacts',
-            "contacts/:id": 'showContact'
+            "contacts/:id": 'showContact',
+            "contacts/:id/edit": 'editContact'
         }
     });
 
@@ -65,6 +91,9 @@ App.on("initialize:after", function(){
         },
         showContact: function(id){
             ContactsApp.Show.Controller.showContact(id);
+        },
+        editContact: function(id){
+            ContactsApp.Edit.Controller.editContact(id);
         }
     };
 
@@ -76,15 +105,58 @@ App.on("initialize:after", function(){
         App.navigate("contacts/" + id);
         API.showContact(id);
     });
+    App.on('contact:edit', function(id){
+        console.log('wow');
+        App.navigate("contacts/" + id + '/edit');
+        API.editContact(id);
+    });
 
     App.addInitializer(function(){
         new ContactsApp.Router({
             controller: API
         });
     });
+});;App.module("ContactsApp.Edit", function(Edit, App){
+    Edit.Controller = {
+        editContact: function(id){
+            var loadingView = new App.Common.Views.Loading();
+            App.mainRegion.show(loadingView);
+
+            var fetchingContact = App.request("contact:entity", id);
+
+            $.when(fetchingContact).done(function(contact){
+                var contactView;
+                if (contact !== undefined) {
+                    contactView = new Edit.Contact({
+                        model: contact
+                    });
+                } else {
+                    contactView = new App.ContactsApp.Show.MissingContact();
+                }
+                App.mainRegion.show(contactView);
+            });
+        }
+    };
+});;App.module("ContactsApp.Edit", function(Edit, App, Backbone, Marionette){
+
+    Edit.Contact = Marionette.ItemView.extend({
+        template: '#contact-form',
+
+        events: {
+            'click .js-submit': 'saveContact'
+        },
+
+        saveContact: function(e){
+            e.preventDefault();
+            console.log('contact saved');
+        }
+    });
 });;App.module('ContactsApp.List', function(List, App){
     List.Controller = {
         listContacts: function(){
+
+            var loadingView = new App.Common.Views.Loading();
+            App.mainRegion.show(loadingView);
 
             var fetchingContacts = App.request('contact:entities');
 
@@ -142,26 +214,46 @@ App.on("initialize:after", function(){
 });;App.module("ContactsApp.Show", function(Show, App){
     Show.Controller = {
         showContact: function(id){
+            var loadingView = new App.Common.Views.Loading();
+            App.mainRegion.show(loadingView);
 
             var fetchingContact = App.request("contact:entity", id);
 
             $.when(fetchingContact).done(function(contact){
                 var contactView;
                 if (contact !== undefined) {
+
                     contactView = new Show.Contact({
                         model: contact
                     });
+
+                    contactView.on('contact:edit', function(model){
+                        App.trigger("contact:edit", model.get("id"));
+                    });
+
                 } else {
                     contactView = new Show.MissingContact();
                 }
                 App.mainRegion.show(contactView);
+
+
             });
         }
     };
 });;App.module("ContactsApp.Show", function(Show, App, Backbone, Marionette){
 
     Show.Contact = Marionette.ItemView.extend({
-        template: '#contact-view'
+        template: '#contact-view',
+
+        events: {
+            'click .js-edit': 'editContact'
+        },
+
+        editContact: function(e){
+            e.preventDefault();
+            console.log(this.model);
+            this.trigger('contact:edit', this.model);
+        }
     });
 
     Show.MissingContact = Marionette.ItemView.extend({

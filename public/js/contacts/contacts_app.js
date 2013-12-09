@@ -3,7 +3,8 @@ App.module("ContactsApp", function(ContactsApp, App, Backbone, Marionette){
     ContactsApp.Router = Marionette.AppRouter.extend({
         appRoutes: {
             "contacts": 'listContacts',
-            "contacts/:id": 'showContact'
+            "contacts/:id": 'showContact',
+            "contacts/:id/edit": 'editContact'
         }
     });
 
@@ -13,6 +14,9 @@ App.module("ContactsApp", function(ContactsApp, App, Backbone, Marionette){
         },
         showContact: function(id){
             ContactsApp.Show.Controller.showContact(id);
+        },
+        editContact: function(id){
+            ContactsApp.Edit.Controller.editContact(id);
         }
     };
 
@@ -23,6 +27,11 @@ App.module("ContactsApp", function(ContactsApp, App, Backbone, Marionette){
     App.on('contact:show', function(id){
         App.navigate("contacts/" + id);
         API.showContact(id);
+    });
+    App.on('contact:edit', function(id){
+        console.log('wow');
+        App.navigate("contacts/" + id + '/edit');
+        API.editContact(id);
     });
 
     App.addInitializer(function(){
