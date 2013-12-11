@@ -15,6 +15,9 @@ App.getCurrentRoute = function(){
     return Backbone.history.fragment;
 };
 
+App.on('all', function(){
+    console.log.apply(console, arguments);
+});
 App.on("initialize:after", function(){
     if(Backbone.history){
         Backbone.history.start();

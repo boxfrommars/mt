@@ -16,7 +16,7 @@
             padding-top: 50px;
         }
         .button-cell {
-            width: 75px;
+            width: 1%;
         }
     </style>
 
@@ -70,15 +70,18 @@
         <td><%= lastName %></td>
         <td class="button-cell">
             <button class="btn btn-xs btn-default js-delete">
-                <i class="glyphicon glyphicon-remove"></i>
-                Delete
+                <i class="glyphicon glyphicon-remove"></i> Delete
             </button>
 
         </td>
         <td class="button-cell">
             <a href="#contacts/<%= id %>" class="btn btn-xs btn-default js-show">
-                <i class="glyphicon glyphicon-eye-open"></i>
-                Show
+                <i class="glyphicon glyphicon-eye-open"></i> Show
+            </a>
+        </td>
+        <td class="button-cell">
+            <a href="#contacts/<%= id %>" class="btn btn-xs btn-default js-edit">
+                <i class="glyphicon glyphicon-pencil"></i> Edit
             </a>
         </td>
     </script>
@@ -88,6 +91,7 @@
         <tr>
             <th>First Name</th>
             <th>Last Name</th>
+            <th></th>
             <th></th>
             <th></th>
         </tr>
