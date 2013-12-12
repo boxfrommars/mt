@@ -11,6 +11,7 @@
     <title>Tux</title>
 
     <link href="/build/vendor.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <style>
         body {
             padding-top: 20px;
@@ -77,6 +78,13 @@
         .nav-tabs>li:first-child>a {
             margin-left: 5px;
         }
+        .order-type-icons {
+            font-size: 30px;
+            line-height: 68px;
+        }
+        .big-text {
+            font-size: 16px;
+        }
     </style>
 
     <!--[if lt IE 9]>
@@ -98,10 +106,19 @@
                         <div class="what-to-say lead">Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</div>
                     </div>
                 </div>
-                <div class="main">
+                <div class="main" id="main-region">
                     <div class="order-new">
-                        <form class="form-inline row city-bar bar" role="form">
-                            <div class="form-group col-md-12">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3" id="side-region">
+            </div>
+        </div>
+    </div>
+
+    <script type="text/template" id="order-new">
+        <form class="form-inline row city-bar bar" role="form">
+            <div class="form-group col-md-12">
                                 <span class="form-group-inline">
                                     <label>Населённый пункт: </label>
                                     <select class="form-control input-sm no-width">
@@ -127,160 +144,265 @@
                                         <option>Не стоянка</option>
                                     </select>
                                 </span>
-                            </div>
-                        </form>
-                        <div class="order-vehicle-tabs row bar">
-                            <ul class="nav nav-tabs">
-                                <li class="active"><a href="#">Автомобиль №1<select class="form-control no-width input-sm" value="33" style="display: inline;"><option>C-класс</option><option>B-класс</option></select></a></li>
-                                <li><a href="#">Автомобиль №2</a></li>
-                                <li><a href="#"><i class="glyphicon glyphicon-plus"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="order-often-addresses row bar">
-                            <div class="col-md-4">
-                                <button type="button" class="btn btn-sm btn-success btn-block">Зиповская 5 к. 33</button>
-                                <button type="button" class="btn btn-sm btn-default btn-block">ТРЦ Галерея</button>
-                            </div>
-                            <div class="col-md-4">
-                                <button type="button" class="btn btn-sm btn-default btn-block">Ставропольская 197</button>
-                                <button type="button" class="btn btn-sm btn-default btn-block">ОЗ Молл</button>
-                            </div>
-                            <div class="col-md-4">
-                                <button type="button" class="btn btn-sm btn-default btn-block">Красная Площадь</button>
-                                <button type="button" class="btn btn-sm btn-default btn-block">Монтажников 33</button>
-                            </div>
-                        </div>
-                        <div class="row bar">
-                            <div class="col-md-4">
-                                <label>Улица</label>
-                                <div class="input-group">
+            </div>
+        </form>
+        <div class="order-vehicle-tabs row bar">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#">Автомобиль №1<select class="form-control no-width input-sm" value="33" style="display: inline;"><option>C-класс</option><option>B-класс</option></select></a></li>
+                <li><a href="#">Автомобиль №2</a></li>
+                <li><a href="#"><i class="glyphicon glyphicon-plus"></i></a></li>
+            </ul>
+        </div>
+        <div class="order-often-addresses row bar">
+            <div class="col-md-4">
+                <button type="button" class="btn btn-sm btn-success btn-block">Зиповская 5 к. 33</button>
+                <button type="button" class="btn btn-sm btn-default btn-block">ТРЦ Галерея</button>
+            </div>
+            <div class="col-md-4">
+                <button type="button" class="btn btn-sm btn-default btn-block">Ставропольская 197</button>
+                <button type="button" class="btn btn-sm btn-default btn-block">ОЗ Молл</button>
+            </div>
+            <div class="col-md-4">
+                <button type="button" class="btn btn-sm btn-default btn-block">Красная Площадь</button>
+                <button type="button" class="btn btn-sm btn-default btn-block">Монтажников 33</button>
+            </div>
+        </div>
+        <div class="row bar">
+            <div class="col-md-4">
+                <label>Улица</label>
+                <div class="input-group">
                                     <span class="input-group-btn">
                                         <button class="btn btn-default btn-sm" type="button"><i class="glyphicon glyphicon-map-marker"></i></button>
                                     </span>
-                                    <input type="text" class="form-control input-sm" value="Зиповская">
-                                </div><!-- /input-group -->
-                            </div>
-                            <div class="col-md-1">
-                                <label>Дом</label>
-                                <input type="text" class="form-control input-sm" value="33">
-                            </div>
-                            <div class="col-md-1">
-                                <label>Подъезд</label>
-                                <input type="text" class="form-control input-sm" value="5">
-                            </div>
-                            <div class="col-md-6">
-                                <label>Комментарий к заказу</label>
-                                <select class="form-control input-sm">
-                                    <option>Въезд между елкой и Стрелкой и Пиноккио Джан, прямо до зелёной лестницы</option>
-                                    <option>Вьезд со стороны университета</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row bar">
-                            <div class="col-md-6">
-                                <textarea class="form-control input-sm" rows="1">А позавчера пингвина. И совершенно явственно.</textarea>
-                            </div>
-                            <div class="col-md-3 col-md-offset-3">
-                                <button type="button" class="btn btn-sm btn-default btn-block"><i class="glyphicon glyphicon-home"></i>&nbsp;&nbsp;Пункт назначения</button>
-                            </div>
-                        </div>
-                        <div class="row bar">
-                            <div class="col-sm-1">
-                                <label>Часы</label>
-                                <input type="text" class="form-control input-sm" value="22">
-                            </div>
-                            <div class="col-sm-1">
-                                <label>Минуты</label>
-                                <input type="text" class="form-control input-sm" value="25">
-                            </div>
-                            <div class="col-md-3">
-                                <label>Дата</label>
-                                <div class="input-group input-group-sm">
-                                    <div class="input-group-btn">
-                                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Сегодня <span class="caret"></span></button>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="#">Сегодня (23.11)</a></li>
-                                            <li><a href="#">Завтра (24.11)</a></li>
-                                            <li><a href="#">Послезавтра (25.11)</a></li>
-                                        </ul>
-                                    </div><!-- /btn-group -->
-                                    <input type="text" class="form-control" value="23.11">
+                    <input type="text" class="form-control input-sm" value="Зиповская">
+                </div><!-- /input-group -->
+            </div>
+            <div class="col-md-1">
+                <label>Дом</label>
+                <input type="text" class="form-control input-sm" value="33">
+            </div>
+            <div class="col-md-1">
+                <label>Подъезд</label>
+                <input type="text" class="form-control input-sm" value="5">
+            </div>
+            <div class="col-md-6">
+                <label>Комментарий к заказу</label>
+                <select class="form-control input-sm">
+                    <option>Въезд между елкой и Стрелкой и Пиноккио Джан, прямо до зелёной лестницы</option>
+                    <option>Вьезд со стороны университета</option>
+                </select>
+            </div>
+        </div>
+        <div class="row bar">
+            <div class="col-md-6">
+                <textarea class="form-control input-sm" rows="1">А позавчера пингвина. И совершенно явственно.</textarea>
+            </div>
+            <div class="col-md-3 col-md-offset-3">
+                <button type="button" class="btn btn-sm btn-default btn-block"><i class="glyphicon glyphicon-home"></i>&nbsp;&nbsp;Пункт назначения</button>
+            </div>
+        </div>
+        <div class="row bar">
+            <div class="col-sm-1">
+                <label>Часы</label>
+                <input type="text" class="form-control input-sm" value="22">
+            </div>
+            <div class="col-sm-1">
+                <label>Минуты</label>
+                <input type="text" class="form-control input-sm" value="25">
+            </div>
+            <div class="col-md-3">
+                <label>Дата</label>
+                <div class="input-group input-group-sm">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Сегодня <span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Сегодня (23.11)</a></li>
+                            <li><a href="#">Завтра (24.11)</a></li>
+                            <li><a href="#">Послезавтра (25.11)</a></li>
+                        </ul>
+                    </div><!-- /btn-group -->
+                    <input type="text" class="form-control" value="23.11">
                                     <span class="input-group-btn">
                                         <button class="btn btn-default" type="button"><i class="glyphicon glyphicon-calendar"></i></button>
                                     </span>
-                                </div><!-- /input-group -->
+                </div><!-- /input-group -->
 
 
 
-                                <!--<div class="input-group input-group-sm">-->
-                                    <!--<span class="input-group-addon">Сегодня</span>-->
-                                    <!--<input type="text" class="form-control" value="14.12">-->
-                                    <!--<span class="input-group-btn">-->
-                                        <!--<button class="btn btn-default btn-sm" type="button"><i class="glyphicon glyphicon-calendar"></i></button>-->
-                                    <!--</span>-->
-                                <!--</div>-->
-                            </div>
-                            <div class="col-md-3">
+                <!--<div class="input-group input-group-sm">-->
+                <!--<span class="input-group-addon">Сегодня</span>-->
+                <!--<input type="text" class="form-control" value="14.12">-->
+                <!--<span class="input-group-btn">-->
+                <!--<button class="btn btn-default btn-sm" type="button"><i class="glyphicon glyphicon-calendar"></i></button>-->
+                <!--</span>-->
+                <!--</div>-->
+            </div>
+            <div class="col-md-3">
                                 <span class="form-group checkbox">
                                     <label>&nbsp;</label><br />
                                     <label>
                                         <input type="checkbox"> Экстренный вызов
                                     </label>
                                 </span>
-                            </div>
-                        </div>
-                        <div class="row bar">
-                            <div class="col-md-5">
-                                <div class="row">
-                                    <label for="inputEmail3" class="col-sm-4 control-label" style="line-height:30px;">Другой номер</label>
-                                    <div class="col-sm-8">
-                                        <input type="email" class="form-control input-sm" id="inputEmail3" value="+7">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-1">
+            </div>
+        </div>
+        <div class="row bar">
+            <div class="col-md-5">
+                <div class="row">
+                    <label for="inputEmail3" class="col-sm-4 control-label" style="line-height:30px;">Другой номер</label>
+                    <div class="col-sm-8">
+                        <input type="email" class="form-control input-sm" id="inputEmail3" value="+7">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-1">
                                 <span class="form-group-inline checkbox">
                                     <label>
                                         <input type="checkbox" checked="checked"> Звонок
                                     </label>
                                 </span>
-                            </div>
-                            <div class="col-md-1">
+            </div>
+            <div class="col-md-1">
                                 <span class="form-group-inline checkbox">
                                     <label>
                                         <input type="checkbox"> СМС
                                     </label>
                                 </span>
-                            </div>
-                        </div>
-                        <div class="row bar">
-                            <div class="col-md-12">
-                                <button type="button" class="btn btn-sm btn-success btn-block">Отправить (Shift + Enter)</button>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3" style="height: 100%; background-color: #ddddff">
-
             </div>
         </div>
-    </div>
+        <div class="row bar">
+            <div class="col-md-12">
+                <button type="button" class="btn btn-sm btn-success btn-block">Отправить (Shift + Enter)</button>
+            </div>
+        </div>
+
+    </script>
+    <script type="text/template" id="order-navigation">
+        <ul class="nav nav-pills nav-stacked js-order-nav">
+            <li><a href="#" class="js-new-order-form">Новый заказ</a></li>
+            <li class="active"><a href="#" class="js-show-order">Назначенный заказ</a></li>
+        </ul>
+    </script>
+    <script type="text/template" id="order">
+        <div class="row bar">
+            <div class="col-md-3 order-type-icons" style="text-align: right">
+                <i class="fa fa-truck big-icon"></i>&nbsp;&nbsp;
+                <i class="glyphicon glyphicon-arrow-right"></i>&nbsp;&nbsp;
+                <i class="glyphicon glyphicon-user"></i>
+            </div>
+            <div class="col-md-9">
+                <p class="lead">К Кириллу едет красный Феррари А555ВО</p>
+                <a href="#">Соединить Кирилла с водителем</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#">Редактировать заказ</a>
+            </div>
+        </div>
+        <div class="row bar" style="background-color: #f8f8f8">
+            <div class="col-md-3" style="text-align: right">
+                <span class="big-text">Зиповская 5, к. 33</span><br />
+                <p>г. Краснодар</p>
+            </div>
+            <div class="col-md-1" style="text-align: center; line-height: 50px;">
+                <i class="glyphicon glyphicon-arrow-right" style="font-size: 24px;"></i>
+            </div>
+            <div class="col-md-3">
+                <span class="big-text">ТРЦ Галерея</span><br />
+                <p>г. Краснодар</p>
+            </div>
+            <div class="col-md-5">
+                Въезд в Экспоцентр между баром "Белка и Стрелка" и рестораном "Пиноккио Джан", всё время прямо до зелёной стеклянной лестницы.
+            </div>
+        </div>
+        <div class="row bar">
+            <div class="col-md-8" style="text-align: right;">
+                <div id="map" style="height: 320px;"></div>
+            </div>
+            <div class="col-md-4" style="height: 320px; overflow-y: scroll;">
+                <h4>Таймлайн</h4>
+                <p>Мигают звёзды над амбарами, фарами, барами, парами и всё вокруг - мразь, гниль, смерть.</p>
+                <p>"О каком равноправии может идти речь? Пусть мужчины сначала научатся рожать!" (с)</p>
+                <p>Морган Фримен: "Я все еще жив, придурки. Перестаньте путать меня с Нельсоном Манделой. Спасибо"</p>
+                <p>Мигают звёзды над амбарами, фарами, барами, парами и всё вокруг - мразь, гниль, смерть.</p>
+                <p>"О каком равноправии может идти речь? Пусть мужчины сначала научатся рожать!" (с)</p>
+                <p>Морган Фримен: "Я все еще жив, придурки. Перестаньте путать меня с Нельсоном Манделой. Спасибо"</p>
+                <p>Мигают звёзды над амбарами, фарами, барами, парами и всё вокруг - мразь, гниль, смерть.</p>
+                <p>"О каком равноправии может идти речь? Пусть мужчины сначала научатся рожать!" (с)</p>
+                <p>Морган Фримен: "Я все еще жив, придурки. Перестаньте путать меня с Нельсоном Манделой. Спасибо"</p>
+            </div>
+        </div>
+    </script>
+    <script src="//api-maps.yandex.ru/2.1-dev/?lang=ru-RU&load=package.full" type="text/javascript"></script>
 
 <!--    DEV part-->
     <script src="/build/vendor.min.js"></script>
     <script>
-        $('.popover').popover();
-        $('.popover').popover('show');
-    </script>
-<!--    END DEV part-->
+        var Tux = new Marionette.Application();
 
-<!--    PRODUCTION part-->
-<!--    <script src="/build/scripts.min.js"></script>-->
-<!--    END PRODUCTION part-->
+        Tux.addRegions({
+            mainRegion: "#main-region",
+            sideRegion: '#side-region'
+        });
 
-    <script type="text/javascript">
+        Tux.OrderNewView = Marionette.ItemView.extend({
+            template: "#order-new",
+            className: 'order-new'
+        });
+
+        Tux.OrderView = Marionette.ItemView.extend({
+            template: "#order",
+            className: 'order'
+        });
+
+        var initMap = function(){
+            ymaps.ready(function () {
+                var myMap = new ymaps.Map('map', {
+                    center: [55.733835, 37.588227],
+                    zoom: 12,
+                    controls: []
+                });
+            });
+        }
+
+        Tux.OrderNavView = Marionette.ItemView.extend({
+            template: '#order-navigation',
+            className: 'bar',
+
+            events: {
+                'click .js-new-order-form': 'renderNewOrderForm',
+                'click .js-show-order': 'renderOrder'
+            },
+
+            renderNewOrderForm: function(e){
+                console.log('new order form');
+                this.$el.find('li').removeClass('active');
+                this.$el.find('.js-new-order-form').parent('li').addClass('active');
+                var view = new Tux.OrderNewView();
+                Tux.mainRegion.show(view);
+                e.preventDefault();
+            },
+
+            renderOrder: function(e){
+                console.log('order');
+                this.$el.find('li').removeClass('active');
+                this.$el.find('.js-show-order').parent('li').addClass('active');
+                var view = new Tux.OrderView();
+                Tux.mainRegion.show(view);
+                e.preventDefault();
+                initMap();
+            }
+        });
+
+
+
+        Tux.on("initialize:after", function(){
+            var orderNavView = new Tux.OrderNavView();
+            Tux.sideRegion.show(orderNavView);
+
+
+            var view = new Tux.OrderView();
+            Tux.mainRegion.show(view);
+            initMap();
+        });
+
+        Tux.start();
     </script>
 </body>
 </html>
