@@ -21,6 +21,12 @@ App.module('ContactsApp.List', function(List, App){
                 contactsListView.on('itemview:contact:show', function(childView, model){
                     App.trigger("contact:show", model.get("id"));
                 });
+
+                contactsListView.on('itemview:contact:edit', function(childView, model){
+                    console.log('edit clicked');
+//                    var view = App.ContactsApp
+                    App.trigger("contact:edit", model.get("id"));
+                });
             });
         }
     };

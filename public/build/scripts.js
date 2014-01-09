@@ -1,8 +1,9 @@
-/*! tux - v0.1.0 - 2013-12-09 */
+/*! tux - v0.1.0 - 2014-01-07 */
 var App = new Marionette.Application();
 
 App.addRegions({
-    mainRegion: "#main-region"
+    mainRegion: "#main-region",
+    dialogRegion: "#dialog-region"
 });
 
 App.latency = 1000;
@@ -15,6 +16,9 @@ App.getCurrentRoute = function(){
     return Backbone.history.fragment;
 };
 
+App.on('all', function(){
+    console.log.apply(console, arguments);
+});
 App.on("initialize:after", function(){
     if(Backbone.history){
         Backbone.history.start();
@@ -98,15 +102,17 @@ App.on("initialize:after", function(){
     };
 
     App.on('contacts:list', function(){
+        console.log('good list');
         App.navigate('contacts');
         API.listContacts();
     });
     App.on('contact:show', function(id){
+        console.log('good show');
         App.navigate("contacts/" + id);
         API.showContact(id);
     });
     App.on('contact:edit', function(id){
-        console.log('wow');
+        console.log('good edit');
         App.navigate("contacts/" + id + '/edit');
         API.editContact(id);
     });
@@ -118,26 +124,37 @@ App.on("initialize:after", function(){
     });
 });;App.module("ContactsApp.Edit", function(Edit, App){
     Edit.Controller = {
-        editContact: function(id){
+        editContact: function(id){ // показываем форму редактирования контакта, вешаем обработчики
+
+            // показываем спиннер, пока загружается контакт
             var loadingView = new App.Common.Views.Loading();
             App.mainRegion.show(loadingView);
 
-            var fetchingContact = App.request("contact:entity", id);
+            /** @var fetchingContact Deferred object */
+            var fetchingContact = App.request("contact:entity", id); // пролучаем Deferred объект контакта
 
-            $.when(fetchingContact).done(function(contact){
+            $.when(fetchingContact).done(function(contact){ // дожидаемся загрузки
                 var contactView;
                 if (contact !== undefined) {
                     contactView = new Edit.Contact({
                         model: contact
                     });
-                } else {
+
+                    contactView.on("form:submit", function(data){
+                        if(contact.save(data)){
+                            App.trigger("contact:show", contact.get("id"));
+                        } else{
+                            contactView.triggerMethod("form:data:invalid", contact.validationError); // триггер события onFormDataInvalid
+                        }
+                    });
+                } else { // если нет такого контакта -- показываем missing
                     contactView = new App.ContactsApp.Show.MissingContact();
                 }
                 App.mainRegion.show(contactView);
             });
         }
     };
-});;App.module("ContactsApp.Edit", function(Edit, App, Backbone, Marionette){
+});;App.module('ContactsApp.Edit', function(Edit, App, Backbone, Marionette){
 
     Edit.Contact = Marionette.ItemView.extend({
         template: '#contact-form',
@@ -148,7 +165,32 @@ App.on("initialize:after", function(){
 
         saveContact: function(e){
             e.preventDefault();
-            console.log('contact saved');
+            var data = Backbone.Syphon.serialize(this);
+            this.trigger('form:submit', data);
+        },
+
+        onFormDataInvalid: function(errors){
+            var self = this;
+            var $view = this.$el;
+
+            var clearFormErrors = function(){
+                var $form = $view.find("form");
+                $form.find(".help-block").each(function(){
+                    $(this).remove();
+                });
+                $form.find(".form-group.has-error").each(function(){
+                    $(this).removeClass("has-error");
+                });
+            };
+
+            var markErrors = function(value, key){
+                var $controlGroup = self.$el.find('#contact-' + key).parent();
+                var $errorEl = $('<span>', {class: 'help-block', text: value});
+                $controlGroup.append($errorEl).addClass('has-error');
+            };
+
+            clearFormErrors();
+            _.each(errors, markErrors);
         }
     });
 });;App.module('ContactsApp.List', function(List, App){
@@ -174,6 +216,12 @@ App.on("initialize:after", function(){
                 contactsListView.on('itemview:contact:show', function(childView, model){
                     App.trigger("contact:show", model.get("id"));
                 });
+
+                contactsListView.on('itemview:contact:edit', function(childView, model){
+                    console.log('edit clicked');
+//                    var view = App.ContactsApp
+                    App.trigger("contact:edit", model.get("id"));
+                });
             });
         }
     };
@@ -184,23 +232,30 @@ App.on("initialize:after", function(){
 
         events: {
             "click": "highlightName",
-            "click .js-delete": "deleteItem",
-            "click .js-show": "showItem"
+            "click .js-delete": "deleteClicked",
+            "click .js-edit": "editClicked",
+            "click .js-show": "showClicked"
         },
 
         highlightName: function() {
             this.$el.toggleClass('warning');
         },
 
-        deleteItem: function(e){
+        deleteClicked: function(e){
             e.stopPropagation();
             this.trigger("contact:delete", this.model);
         },
 
-        showItem: function(e) {
+        showClicked: function(e) {
             e.stopPropagation();
             e.preventDefault();
             this.trigger("contact:show", this.model);
+        },
+
+        editClicked: function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            this.trigger("contact:edit", this.model);
         }
     });
 
@@ -263,7 +318,22 @@ App.on("initialize:after", function(){
 App.module("Entities", function(Entities, App, Backbone, Marionette, $){
 
     Entities.Contact = Backbone.Model.extend({
-        urlRoot: "contacts"
+        urlRoot: "contacts",
+        validate: function(attrs /*, options */) {
+            var errors = {};
+            if (! attrs.firstName) {
+                errors.firstName = "can't be blank";
+            }
+            if (! attrs.lastName) {
+                errors.lastName = "can't be blank";
+            }
+            else{
+                if (attrs.lastName.length < 2) {
+                    errors.lastName = "is too short";
+                }
+            }
+            return _.isEmpty(errors) ? undefined : errors;
+        }
     });
 
     Entities.configureStorage(Entities.Contact); // for local storage only

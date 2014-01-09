@@ -21,17 +21,17 @@ App.module("ContactsApp", function(ContactsApp, App, Backbone, Marionette){
     };
 
     App.on('contacts:list', function(){
-        console.log('good');
+        console.log('good list');
         App.navigate('contacts');
         API.listContacts();
     });
     App.on('contact:show', function(id){
-        console.log('good');
+        console.log('good show');
         App.navigate("contacts/" + id);
         API.showContact(id);
     });
     App.on('contact:edit', function(id){
-        console.log('good');
+        console.log('good edit');
         App.navigate("contacts/" + id + '/edit');
         API.editContact(id);
     });

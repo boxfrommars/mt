@@ -5,23 +5,30 @@ App.module("ContactsApp.List", function(List, App, Backbone, Marionette){
 
         events: {
             "click": "highlightName",
-            "click .js-delete": "deleteItem",
-            "click .js-show": "showItem"
+            "click .js-delete": "deleteClicked",
+            "click .js-edit": "editClicked",
+            "click .js-show": "showClicked"
         },
 
         highlightName: function() {
             this.$el.toggleClass('warning');
         },
 
-        deleteItem: function(e){
+        deleteClicked: function(e){
             e.stopPropagation();
             this.trigger("contact:delete", this.model);
         },
 
-        showItem: function(e) {
+        showClicked: function(e) {
             e.stopPropagation();
             e.preventDefault();
             this.trigger("contact:show", this.model);
+        },
+
+        editClicked: function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            this.trigger("contact:edit", this.model);
         }
     });
 

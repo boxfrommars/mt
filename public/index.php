@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -64,6 +63,8 @@
             </div>
         </div>
     </div>
+
+    <div id="dialog-region"></div>
 
     <script type="text/template" id="contact-list-item">
         <td><%= firstName %></td>

@@ -25,13 +25,14 @@ App.module('ContactsApp.Edit', function(Edit, App, Backbone, Marionette){
                 $form.find(".form-group.has-error").each(function(){
                     $(this).removeClass("has-error");
                 });
-            }
+            };
 
             var markErrors = function(value, key){
                 var $controlGroup = self.$el.find('#contact-' + key).parent();
                 var $errorEl = $('<span>', {class: 'help-block', text: value});
                 $controlGroup.append($errorEl).addClass('has-error');
-            }
+            };
+
             clearFormErrors();
             _.each(errors, markErrors);
         }

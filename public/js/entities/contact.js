@@ -3,8 +3,8 @@ App.module("Entities", function(Entities, App, Backbone, Marionette, $){
 
     Entities.Contact = Backbone.Model.extend({
         urlRoot: "contacts",
-        validate: function(attrs, options) {
-            var errors = {}
+        validate: function(attrs /*, options */) {
+            var errors = {};
             if (! attrs.firstName) {
                 errors.firstName = "can't be blank";
             }
@@ -16,9 +16,7 @@ App.module("Entities", function(Entities, App, Backbone, Marionette, $){
                     errors.lastName = "is too short";
                 }
             }
-            if( ! _.isEmpty(errors)){
-                return errors;
-            }
+            return _.isEmpty(errors) ? undefined : errors;
         }
     });
 
